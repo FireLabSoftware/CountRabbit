@@ -1,0 +1,129 @@
+## Data Input - Generally a set of .fastq or .fasta files resulting from sequencing experiments.  Can be gzipped (.gz)
+#### The list of datafiles can be a simple (comma-delimited) list or can involve a wildcard (e.g. '*.fastq.gz').
+#### Any list or wildcard-based specification needs to be quoted (the entire list enclosed in a single quoted block)
+DataFiles1 = '' ## (data=) The input data file list.  The list should be enclosed by quotes (e.g. 'Run1.fastq,Run2.fastq,Run3.fastq')
+SampleToData1 = '' ## (sampletodata=) An alternative to a simple input data file or file list.  A file here specifies correspondence between samples and filenames.  Format: Each line should have SampleName <tab> comma-delimmited list of filenames
+NoNs1 = False ## ( nons=)Setting this to true ignores any read with "N" bases 
+AutoPair1 = True ## (autopair=) Setting this to true attempts to pair read1 and read2 files
+NoDup1 = False ## (nodup=) Setting NoDup to True instructs Rabbit to not to count k-mers in a paired end read that are also in R1.  This provides somewhat more nuanced K-mer counts but will slow the program down substantially; Read counts are not affected.
+R1Trim5 = 0 ## (r1trim5=) Length to trim from 5' end in R1
+R2Trim5 = 0 ## (r2trim5=) Length to trim from 5' end in R2
+R1Trim3 = 0 ## (r1trim3=) Length to trim from 3' end in R1
+R2Trim3 = 0 ## (r2trim3=) Length to trim from 3' end in R2
+MaxReadLen1 = 0 ## (maxreadlength=) After filtering, reads will be truncated to this length. ==0 for no maximum read length
+EndLinker1 = '' ## (endlinker=) A linker at the end of the read will be chewed off using an rfind command (for short RNA reads one such is 'TGGAAT')
+RequireEndLinker1 = False ## (requireendlinker=) Setting this to true removes any read without this linker
+
+## Reference Input
+#### The reference list is generally a .fasta file or list of files (can be gzipped) with reference sequence to match against.
+ReferenceFiles1 = '' ## (reference=)(ref=) List of reference files
+CircularReference1 = False  ## Setting to True will compare reads to a circular reference
+ReferenceFileByFile1 = False ## Setting this to True will aggregate each input reference file into a single entity
+FilterList1 = '' ## This can be used to filter k-mers based on their copy number in an arbitrary fasta file (or group of files). Adding FilterList='MyFile.fa>5' to the command line will only use kmers with >6 instances in MyFile.fa.
+                 ## Using the syntax FilterList1=Reference>5 filters k-mers based on their copy number in the Reference files (in this case only counting reads present >5 times)
+                 ## Multiple files can be separated by commas, and multiple filters seprated by semicolons
+                 ## Thus as a complex example FilterList='reference>5;myFileA.fa>3;myFileB,myFileC<2' will keep and analyze only kmers that meet the criteria
+                 ##    More than 5 copies of the kmer the aggregate reference files specified in ReferenceFiles=
+                 ##    More than 3 copies of the together in myFileA.fa file
+                 ##    Less than 2 copies (total) in the files myFileB myFileC
+## Settings for sequence comparison
+klen1 = 31 ##(klen=) Kmer length for counting matched subsequences 
+MaxReadsPerFile1 = 0 ## Set to a positive number to limit the number of reads per file
+ReportGranularity1 = 1000000 ## How frequently to report updates
+TurboRareK1 = 'Auto' ## A KMer length to be used for initial prescreening.  This is particularly useful for datasets where most reads fail to match the reference
+TurboRareLimit1 = 0 ## Setting this to a positive number n insists that there be a matching number within the first n bases of any read for it to be considered 
+EstimatedAverageReadLen1 = 300 ## (expectedaveragereadlen=) This only affects the speed-optimization (by guiding the choice of turboKlen when it is set to "Auto"). Can change this if longer or shorter reads are expected.
+TetritisF1 = '' ## (tetritisf=) Name of tetritis file for optional on-the-fly masking of linker bits (file IlluminaTetritis1223.fa, distributed with this program, can be used)
+TetritisK1 = 16 ## (tetritisk=) Length of K-mer for tetritis filtering
+FirstDibs1 = False ## (firstdibs=) Setting this to true assigns each k-mer and read that is shared to only the first matching reference (disallows multimapping)
+PrivateOnly1 = False ## (privateonly=) Setting this to true ignores any k-mer present in more than one reference
+AggregateUniqueAndLocalRepeats1 = False ## (aggregateuniqueandlocalrepeats=) Setting this to true provides a single output that sums both unique and local repeats
+## Settings for output
+OutFileName1 = 'default' ## (outfile=)(outfilebase=)
+SkipBlankRefs1 = True ## (skipblankrefs=) Setting this to True will mask output for reference sequences that are not detected
+SkipBlankData1 = True ## (skipblankdata=) Setting this to True will mask output for datasets where no reference match is detected
+Delimiter1 = '\r' ## (delimeter=) New line delimiter for output
+
+## Some additional user-specifiable values
+Express1 = False ## (express=) Setting this to True provides an express version of the program yielding only read counts and with ambiguous reads assigned to first match
+FastQDumpProgram1 = 'fasterq-dump' ## Full path of fastq-dump/fasterq-dump program to download from SRA if needed.
+PrimaryIndex1 = 'default' ## (primaryindex=) (index=) Other settings can offer speedup or memory management advantages for larger files.  PrimaryIndex can be from "Data" or "Reference" or a file name with a previous index
+WriteIndex1 = False ## Setting this to a filename will write the index that is compiled so it can be used for a future run.  For large reference files (>100s of MB) using this file can save time in future runs
+Threads1 = 'Auto' ## Number of threads for multiprocessing (zero for single core execution)
+
+## Some settings for graphic and .tdv output
+vscale1 = 14 ## (vscale=) Vertical scale for graphic
+hscale1 = 42 ## (hscale=) Horizontal scale for graphic
+MinCountsForDisplay1 = 1 ## (mincountsfordisplay=) References with fewer average reads-per-sample will be skipped in display
+SortReferencesByReadCount1 = False ## (sortreferencesbyreadcount=) Setting this to true will sort references from low to higher counts
+ClusterReferences1 = False ## (clusterferences=) Setting clusterferences to true implements a very rudimentary references clustering for the graphic display 
+MaxRefToDisplay1 = 0 ## (maxreftodisplay=) Limits the number of references displayed on the illustrative graph (zero is unlimited).  Priority for display is based on kmer counts (read counts in express mode)
+ClusterSamples1 = False ## (clusterferences=) Setting clustersamples to true implements a very rudimentary samples clustering for the graphic display 
+GraphTitle1 = 'default' ## (graphtitle=) Sets a graph title.  Default will be OutputFile Name
+SuppressGraphDetails1 = False ## setting this to true suppresses the detailed listing of program parameters on the output graphic
+## Choice of output fields
+#     'KmerCount'               :  7   ## Raw Kmer Counts 
+#     'KmerCount2'              :  8   ## Sum of Raw Kmer counts squared
+#     'ReadCount'               :  9   ## Read Counts
+#     'KmersCovered'            : 10   ## Number of kmers covered
+#     'KmerDepthAve'            : 11   ## Average depth of coverage 
+#     'KmerDepthStdDev'         : 12   ## Standard deviation of coverage depth
+#     'KmerCoverage'            : 13   ## Fraction of Kmers covered in data
+#     'KmerSampleFraction'      : 14   ## Fraction of pass-filter kmers in sample assigned to this partition
+#     'ReadSampleFraction'      : 15   ## Fraction of pass-filter reads in sample assigned to this partition
+#     'KPKM'                    : 16   ## Kmers mapped per thousand reference kmers per million pass-filter kmers
+#     'RPKM'                    : 17   ## Reads mapped per thousand reference kmers per million pass-filter reads
+#     'KmerEnrichment'          : 18   ## Enrichment of kmers mapped to this partition over observed for all datasets
+#     'ReadEnrichment'          : 19   ## Enrichment of reads mapped to this partition over observed for all datasets
+
+HeatMapColorField1 = 'RPKM'  ## (heatmapcolorfield=) Sets the raw or processed value used to color rectangles in the summary heatmap.  See options above
+ExtraTDVFields1 = 'RPKM'      ## (extratdvfield=) (extratdvfields=) Specifying one or more of the "processed" measurement values above (#11-19 above) in this list expands the .tdv output to include these 
+HeatMapTextFields1 = 'default' ## (heatmaptextfield=) (heatmaptextfields=) Specifying one or more values in this list will add the relevant values to the heatmap
+## Note that KMer counts are not calculated in Express mode, so any kmer-reliant value will be recorded as zero in Express mode
+## If you encounter this either run with Express=False or choose read-count (or RPKM or ReadSampleFraction) as the displayed value
+## ->Here are a few more details
+##  -
+##  - Other Notes
+##  - Any version of python beyond 3.7 can be used.  For speed, Python 3.11 (or better, PyPy3.9+) is highly recommended
+##  - For SRR/ERR/DRR datasets not present locally, KFR will try to download the files from NCBI (linux/mac only).
+##  -   You can provide the location of fastq-dump with FastQDumpProgram= (otherwise, KFR will look for it, which can be slow)
+##  - Memory and multiprocess management
+##  -     i. You can set a maximum number of CPU threads for the analysis with the command line option Threads=
+##  -     ii. If Reference complexity is extensive (>500M different kmers), while Data is a smaller number (e.g. small set of reads), 
+##  -       then setting PrimaryIndex = 'Reference' can avoid memory issues (avoids preassembling a preliminary kmer Set from Datas)
+## End list of user settings
+
+##  -
+##  DESCRIPTION OF MATCHING CRITERIA USED TO GENERATE READ COUNTS FOR EACH REFERENCE
+##  - The following discussion is a detailed description of the sausage making involved in assigning reads.
+##  - With a long-ish k-mer  (e.g. the default, which is 31) and reference sequences that are not highly degererate, the following considerations are not substantial
+##  - For pools of references that are very similar to each other, the discussion becomes more relevant
+##  
+##  - The simplest category of Kmers are those that are present just once and in one reference ('Unique' k-mers)
+##  - Any single k-mer shared between a read and a reference nominates the read as matching that reference
+##  - In cases where there is no ambiguity (ie no match to any other reference from the read), the nomination is counted as a "private match"
+##  -    This means that a read with any number of k-mer matches to a reference is counted as a match to the reference
+##  - Reads that match unique "private" k-mers from more than one reference are assigned arbitrarily to the last matching reference in the list
+##
+##  - Kmers present in more than one reference are a second category and are called 'public'
+##  - Reads with 'public' kmers can still be assigned to an individual reference if there are 'private' k-mers matching a unique reference
+##  - In cases where all kmers in a read match only public k-mers, the read is assigned to the public category
+##  - A public-category read will still be assigned to one or more references; so each reference can have its own "public" category
+##  - Assignment of a public read is based on the most restricted Kmer present in that read (kmer present in fewest references)
+##  - In standard mode, public reads are assigned to every reference matching the assigning k-mer.
+##  -     Turning on the option FirstDibs=True alters this so that only the first reference with the assigning k-mer is credited
+##  - Turning on the option PrivateOnly=True tells KCR to ignore public kmers and reads (focusing only on k-mers belonging to a single reference)
+##  -
+##  - A third category of k-mers ("LocalRepeat" Kmers) are those present more than once but only in a single reference.
+##  -     These are reported as a separate category in Kmer counts
+##  -     Reads that only match LocalRepeat Kmers are reported also as in the LocalRepeat reads category
+##  -     Reference Assignment based on a unique k-mer takes precedence over assignment based on a local repeat k-mer
+##  - Setting the parameter AggregateUniqueAndLocalRepeats=True instructs KCR to group local repeat and unique k-mers together
+##  -     The combined Unique+LocalRepeat category is then designated "Private"
+##  -
+##  - Kmer counts are provided along with read counts and can be used to evaluate coverage where there is complex redundancy between references
+##  - Where references are well distinguished from each other (few or no shared k-mers), the "Express" setting can be used
+##  -      Express=True tells KCR to assign each read based on the first uniquely matching k-mer encountered (no need to go through the rest of the read)
+##  -      Express mode doesn't count k-mers -- just reads; for datasets where most reads match the reference this can speed the program up greatly
+##  -      Cases where only a small portion of reads match the reference won't be sped up in express mode
+
