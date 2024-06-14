@@ -1,6 +1,6 @@
 KMerCountRabbit ('KCR')-- Very Simple and Quick Reference-based read and kmer counting for NGS Datasets
 
-Version aj00 06_09_2024
+Version aj02 06_13_2024
 
 OVERVIEW OF KCR
 - You have a bunch of datasets from next generation sequencing and a reference, and want to count matches between them
