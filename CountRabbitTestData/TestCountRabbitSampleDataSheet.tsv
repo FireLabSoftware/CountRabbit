@@ -1,0 +1,4 @@
+G1	category(Genomic)	color(red)	./CountRabbitTestData/G1_R*.fastq.gz
+G2	category(Genomic)	color(red)	./CountRabbitTestData/G2_R*.fastq.gz
+E1	category(eccDNA)	color(blue)	./CountRabbitTestData/E1_R*.fastq.gz
+E2	category(eccDNA)	color(blue)	./CountRabbitTestData/E2_R*.fastq.gz
