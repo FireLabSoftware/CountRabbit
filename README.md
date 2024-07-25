@@ -4,8 +4,8 @@
 	- The location of sequencing datafiles
 	- <Optional> choices of parameters for 
 - What comes out: 
-	-A table of match counts (K-mers and/or Reads) 
-	-A very quick visualization
+	- A table of match counts (K-mers and/or Reads) 
+	- A very quick visualization
 - Important Features: Quick, Simple, Consistent handling of sequences shared between references 
 - CountRabbit is K-mer based
 	- Any read that matches at least one k-mer in a reference genome is assigned to that genome
