@@ -1,6 +1,6 @@
 - CountRabbit: A rapid k-mer-based counting tool for analysis of sequencing data
-- Quick Start: Download the CountRabbitFolder_ba07_031026.zip file, unzip it, and run a command like
-    - python CountRabbit_ba07_031026.py ref=<fasta_ref_sequences> data=<fastq.gz_sequence_data>
+- Quick Start: Download the CountRabbitFolder_ba08_031226.zip file, unzip it, and run a command like
+    - python CountRabbit_ba08_031226.py ref=<fasta_ref_sequences> data=<fastq.gz_sequence_data>
     - You'll get graphic and tabular output with counts, etc
     - Many options are available beyond this. See text below and the doc file (CountRabbit_Docs_##.docx)
 - What goes in: 
@@ -36,4 +36,4 @@
 	- CountRabbit is a work in progress
 		- For now, any results (or lack thereof) should be checked/verified with other tools
 	- Please report any bugs/crashes to afire<at>stanford<dot>edu
- - For more detail, see the CountRabbitDocumentationFile (CountRabbit_Docs_ba07_031026.docx) in this repository
+ - For more detail, see the CountRabbitDocumentationFile (CountRabbit_Docs_ba08_031226.docx) in this repository
